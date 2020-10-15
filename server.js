@@ -32,6 +32,7 @@ client.connect((err) => {
   const courseCollection = client.db("creativeAgency").collection("course");
   const serviceCollection = client.db("creativeAgency").collection("service");
   const reviewCollection = client.db("creativeAgency").collection("review");
+  const adminCollection = client.db("creativeAgency").collection("admin");
   console.log("Database is connected");
 
   // course post
@@ -93,7 +94,6 @@ client.connect((err) => {
 
   // review post
   app.post("/review", (req, res) => {
-    console.log(req.body.review);
     const review = req.body.review;
 
     reviewCollection.insertOne(review).then((result) => {
@@ -103,6 +103,30 @@ client.connect((err) => {
   // review get
   app.get("/allReview", (req, res) => {
     reviewCollection.find({}).toArray((err, doc) => {
+      res.send(doc);
+    });
+  });
+
+  // admin post
+  app.post("/addAdmin", (req, res) => {
+    const email = req.body.data;
+
+    adminCollection.insertOne({ email: email }).then((result) => {
+      res.send(result.insertedCount > 0);
+    });
+  });
+  // Is Admin post
+  app.post("/isAdmin", (req, res) => {
+    const email = req.body.data;
+    console.log(req.body.data);
+    adminCollection.find({ email: email }).toArray((err, doctors) => {
+      res.send(doctors.length > 0);
+    });
+  });
+
+  // admin get
+  app.get("/Admin", (req, res) => {
+    adminCollection.find({}).toArray((err, doc) => {
       res.send(doc);
     });
   });
