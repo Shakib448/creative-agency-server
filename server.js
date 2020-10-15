@@ -30,5 +30,27 @@ const client = new MongoClient(uri, {
 
 client.connect((err) => {
   const courseCollection = client.db("creativeAgency").collection("course");
+  const serviceCollection = client.db("creativeAgency").collection("service");
   console.log("Database is connected");
+
+  app.post("/addService", (req, res) => {
+    console.log(req.body);
+    const file = req.files.file;
+    const service = req.body.service;
+    const description = req.body.description;
+    const newImg = file.data;
+    const encImg = newImg.toString("base64");
+
+    const image = {
+      contentType: req.files.file.mimetype,
+      size: req.files.file.size,
+      img: Buffer.from(encImg, "base64"),
+    };
+
+    console.log(image);
+
+    // serviceCollection.insertOne({ name, email, image }).then((result) => {
+    //   res.send(result.insertedCount > 0);
+    // });
+  });
 });
