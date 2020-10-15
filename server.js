@@ -52,7 +52,8 @@ client.connect((err) => {
 
   // course get
   app.get("/course", (req, res) => {
-    courseCollection.find({}).toArray((err, doc) => {
+    console.log(req.query.email);
+    courseCollection.find({ email: req.query.email }).toArray((err, doc) => {
       res.send(doc);
     });
   });
