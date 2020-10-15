@@ -31,6 +31,7 @@ const client = new MongoClient(uri, {
 client.connect((err) => {
   const courseCollection = client.db("creativeAgency").collection("course");
   const serviceCollection = client.db("creativeAgency").collection("service");
+  const reviewCollection = client.db("creativeAgency").collection("review");
   console.log("Database is connected");
 
   // course post
@@ -52,8 +53,13 @@ client.connect((err) => {
 
   // course get
   app.get("/course", (req, res) => {
-    console.log(req.query.email);
     courseCollection.find({ email: req.query.email }).toArray((err, doc) => {
+      res.send(doc);
+    });
+  });
+
+  app.get("/allCourse", (req, res) => {
+    courseCollection.find({}).toArray((err, doc) => {
       res.send(doc);
     });
   });
@@ -81,6 +87,22 @@ client.connect((err) => {
   //service get
   app.get("/service", (req, res) => {
     serviceCollection.find({}).toArray((err, doc) => {
+      res.send(doc);
+    });
+  });
+
+  // review post
+  app.post("/review", (req, res) => {
+    console.log(req.body.review);
+    const review = req.body.review;
+
+    reviewCollection.insertOne(review).then((result) => {
+      res.send(result.insertedCount > 0);
+    });
+  });
+  // review get
+  app.get("/allReview", (req, res) => {
+    reviewCollection.find({}).toArray((err, doc) => {
       res.send(doc);
     });
   });
