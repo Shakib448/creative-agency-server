@@ -33,8 +33,31 @@ client.connect((err) => {
   const serviceCollection = client.db("creativeAgency").collection("service");
   console.log("Database is connected");
 
+  // course post
+  app.post("/selectedCourse", (req, res) => {
+    const service = req.body.data.service;
+    const description = req.body.data.description;
+    const image = req.body.data.image;
+    const email = req.body.data.email;
+    const name = req.body.data.name;
+    const photo = req.body.data.img;
+    const isSignIn = req.body.data.isSignIn;
+
+    courseCollection
+      .insertOne({ service, description, image, email, name, photo, isSignIn })
+      .then((result) => {
+        res.send(result.insertedCount > 0);
+      });
+  });
+
+  // course get
+  app.get("/course", (req, res) => {
+    courseCollection.find({}).toArray((err, doc) => {
+      res.send(doc);
+    });
+  });
+  // service post
   app.post("/addService", (req, res) => {
-    console.log(req.body);
     const file = req.files.file;
     const service = req.body.service;
     const description = req.body.description;
@@ -47,10 +70,17 @@ client.connect((err) => {
       img: Buffer.from(encImg, "base64"),
     };
 
-    console.log(image);
+    serviceCollection
+      .insertOne({ service, description, image })
+      .then((result) => {
+        res.send(result.insertedCount > 0);
+      });
+  });
 
-    // serviceCollection.insertOne({ name, email, image }).then((result) => {
-    //   res.send(result.insertedCount > 0);
-    // });
+  //service get
+  app.get("/service", (req, res) => {
+    serviceCollection.find({}).toArray((err, doc) => {
+      res.send(doc);
+    });
   });
 });
