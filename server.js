@@ -21,3 +21,14 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running ${"http://localhost:5000/"}`);
 });
+
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.qebvf.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+client.connect((err) => {
+  const courseCollection = client.db("creativeAgency").collection("course");
+  console.log("Database is connected");
+});
