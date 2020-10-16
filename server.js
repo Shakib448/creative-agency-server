@@ -33,6 +33,7 @@ client.connect((err) => {
   const serviceCollection = client.db("creativeAgency").collection("service");
   const reviewCollection = client.db("creativeAgency").collection("review");
   const adminCollection = client.db("creativeAgency").collection("admin");
+  const orderCollection = client.db("creativeAgency").collection("order");
   console.log("Database is connected");
 
   // course post
