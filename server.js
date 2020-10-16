@@ -118,16 +118,26 @@ client.connect((err) => {
   // Is Admin post
   app.post("/isAdmin", (req, res) => {
     const email = req.body.data;
-    console.log(req.body.data);
-    adminCollection.find({ email: email }).toArray((err, doctors) => {
-      res.send(doctors.length > 0);
+    adminCollection.find({ email: email }).toArray((err, admin) => {
+      res.send(admin.length > 0);
     });
   });
 
   // admin get
   app.get("/Admin", (req, res) => {
+    console.log(req.body.email);
     adminCollection.find({}).toArray((err, doc) => {
       res.send(doc);
     });
+  });
+
+  //delete
+
+  app.delete("/delete/:id", (req, res) => {
+    courseCollection
+      .deleteOne({ _id: ObjectId(req.params.id) })
+      .then((result) => {
+        res.send(result.insertedCount > 0);
+      });
   });
 });
