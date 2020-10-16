@@ -4,7 +4,6 @@
   "description": "Creative Agency ",
   "main": "server.js",
   "scripts": {
-    "prestart": "next build",
     "start": "node server.js",
     "server": "nodemon server.js"
   },
