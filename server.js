@@ -3,7 +3,7 @@ const app = express();
 const cors = require("cors");
 require("dotenv").config();
 const bodyParser = require("body-parser");
-const fileUpload = require("express-fileupload");
+const fileupload = require("express-fileupload");
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectID;
 
@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static("doctors"));
-app.use(fileUpload());
+app.use(fileupload());
 
 app.get("/", (req, res) => {
   res.send("Welcome Backhand");

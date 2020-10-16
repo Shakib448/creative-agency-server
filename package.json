@@ -14,10 +14,9 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.0",
     "mongodb": "^3.6.2",
     "nodemon": "^2.0.5"
   },
-  "devDependencies": {
-    "express-fileupload": "^1.2.0"
-  }
+  "devDependencies": {}
 }
